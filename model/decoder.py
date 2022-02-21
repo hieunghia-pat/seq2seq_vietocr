@@ -48,7 +48,7 @@ class Decoder(nn.Module):
         encoder_outputs: src_len x batch_size x hid_dim
         """
 
-        embedded = self.dropout(self.embedding(input))
+        embedded = self.dropout(self.embedding(input)).permute(1, 0, 2) # (1, batch_size, emb_dim)
         
         a = self.attention(hidden, encoder_outputs)
                 
@@ -60,7 +60,7 @@ class Decoder(nn.Module):
         
         weighted = weighted.permute(1, 0, 2)
 
-        rnn_input = torch.cat((embedded, weighted), dim = 2)
+        rnn_input = torch.cat((embedded, weighted), dim = -1)
         
         output, (hidden, _) = self.rnn(rnn_input, (hidden.unsqueeze(0), torch.zeros_like(hidden.unsqueeze(0)).cuda()))
         

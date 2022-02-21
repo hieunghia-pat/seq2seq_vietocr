@@ -1,5 +1,5 @@
 # dataset configuration
-batch_train = 32
+batch_train = 4
 batch_test = 1
 image_dirs = [
                 "../UIT-HWDB-dataset/UIT_HWDB_line_v2/train_data",
