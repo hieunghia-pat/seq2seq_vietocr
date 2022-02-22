@@ -56,7 +56,7 @@ def run_epoch(loaders, train, prefix, epoch, fold, model, loss_compute, metric, 
                 loss_tracker.append(loss.item())
                 pbar.set_postfix(loss=fmt(loss.item()))
             else:
-                outs = model.get_predictions(batch.imgs)
+                outs = model.get_predictions(batch.imgs, dataset.vocab, dataset.max_len)
                 predicted_texts = dataset.vocab.decode_sentence(outs.to("cpu"))
                 gt_texts = dataset.vocab.decode_sentence(batch.tokens.to("cpu"))
                 scores = metric.get_scores(predicted_texts, gt_texts)
